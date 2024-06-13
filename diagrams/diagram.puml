@@ -1,0 +1,48 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface FileSystem {
+}
+
+interface FileSystemDirectory implements FileSystem {
+    +add(file: FileSystem)
+    +remove(file: FileSystem)
+    +getChildren(): List<FileSystem>
+}
+
+class Directory implements FileSystemDirectory{
+    -name: String
+    -parent: Directory
+    -children: List<FileSystem>
+    +add(file: FileSystem)
+    +remove(file: FileSystem)
+}
+
+class File implements FileSystem{
+    -name: String
+    -parent: Directory
+}
+
+interface Action{
+    +execute()
+}
+
+class cd implements Action{
+    -path: String
+    +execute()
+}
+class ls implements Action{
+    -path: String
+    +execute()
+}
+class touch implements Action{
+    -path: String
+    +execute()
+}
+class mkdir implements Action{
+    -path: String
+    +execute()
+}
+
+
+@enduml
