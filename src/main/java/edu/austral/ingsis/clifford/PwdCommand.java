@@ -4,9 +4,10 @@ public class PwdCommand implements  Commands{
     @Override
     public String execute(FileSystem fileSystem, String args) {
         StringBuilder path = new StringBuilder();
-        while (fileSystem.getCurrentFile().getFather() != null) {
+        FileSystemComponent currentFile = fileSystem.getCurrentFile();
+        while (currentFile.getFather() != null) {
             path.insert(0, "/" + fileSystem.getCurrentFile().getName());
-            fileSystem.setCurrentFile(fileSystem.getCurrentFile().getFather());
+            currentFile = currentFile.getFather();
         }
 
         return path.toString();
