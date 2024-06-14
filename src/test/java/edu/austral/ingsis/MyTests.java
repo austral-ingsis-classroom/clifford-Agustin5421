@@ -24,7 +24,7 @@ public class MyTests {
     assertEquals("'folder1' directory created", fileSystem.executeCommand("mkdir folder1"));
     fileSystem.executeCommand("touch file.txt");
     fileSystem.executeCommand("ls");
-    assertEquals("Moved to directory: 'folder1'", fileSystem.executeCommand("cd folder1"));
+    assertEquals("moved to directory 'folder1'", fileSystem.executeCommand("cd folder1"));
     fileSystem.executeCommand("ls");
     fileSystem.executeCommand("mkdir newFolder");
     assertEquals(
@@ -53,7 +53,7 @@ public class MyTests {
                 new PwdCommand()));
     assertEquals("", fileSystem.executeCommand("ls"));
     assertEquals("'folder1' directory created", fileSystem.executeCommand("mkdir folder1"));
-    assertEquals("Moved to directory: 'folder1'", fileSystem.executeCommand("cd folder1"));
-    assertEquals("/root/folder1", fileSystem.executeCommand("pwd"));
+    assertEquals("moved to directory 'folder1'", fileSystem.executeCommand("cd folder1"));
+    assertEquals("/folder1", fileSystem.executeCommand("pwd"));
   }
 }
