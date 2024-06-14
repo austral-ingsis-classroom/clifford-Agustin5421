@@ -12,10 +12,9 @@ public class FileSystemTests {
   private final FileSystemRunner runner = new MyFileSystemRunner();
 
   private void executeTest(List<Map.Entry<String, String>> commandsAndResults) {
-    final List<String> commands = commandsAndResults.stream().map(Map.Entry::getKey).toList();
+    final List<String> commands = commandsAndResults.stream().map(entry -> entry.getKey()).toList();
     final List<String> expectedResult =
-        commandsAndResults.stream().map(Map.Entry::getValue).toList();
-
+        commandsAndResults.stream().map(entry -> entry.getValue()).toList();
     final List<String> actualResult = runner.executeCommands(commands);
 
     assertEquals(expectedResult, actualResult);
