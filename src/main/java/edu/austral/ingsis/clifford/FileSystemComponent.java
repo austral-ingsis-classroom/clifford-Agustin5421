@@ -7,7 +7,8 @@ public interface FileSystemComponent {
     String getName();
     void setFather(FileSystemComponent father);
     FileSystemComponent getFather();
-    String addFile(FileSystemComponent file);
+    void addFileSystemComponent(FileSystemComponent component);
+    void removeFileSystemComponent(String name);
 
     String typeToString();
 

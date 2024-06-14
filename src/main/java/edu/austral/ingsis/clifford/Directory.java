@@ -1,5 +1,6 @@
 package edu.austral.ingsis.clifford;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Directory implements FileSystemComponent{
@@ -10,6 +11,23 @@ public class Directory implements FileSystemComponent{
     public Directory(List<FileSystemComponent> children, String name) {
         this.children = children;
         this.name = name;
+    }
+
+    public Directory(List<FileSystemComponent> children, String name, FileSystemComponent father){
+        this.children = children;
+        this.name = name;
+        this.father = father;
+    }
+
+    public Directory(String name) {
+        this.children = new ArrayList<>();
+        this.name = name;
+    }
+
+    public Directory(String name, FileSystemComponent father) {
+        this.children = new ArrayList<>();
+        this.name = name;
+        this.father = father;
     }
 
     @Override
@@ -33,9 +51,13 @@ public class Directory implements FileSystemComponent{
     }
 
     @Override
-    public String addFile(FileSystemComponent file) {
-        children.add(file);
-        return "'" + file.getName() + "' " + file.typeToString();
+    public void addFileSystemComponent(FileSystemComponent component) {
+        children.add(component);
+    }
+
+    @Override
+    public void removeFileSystemComponent(String name) {
+        children.removeIf(fileSystemComponent -> fileSystemComponent.getName().equals(name));
     }
 
     @Override

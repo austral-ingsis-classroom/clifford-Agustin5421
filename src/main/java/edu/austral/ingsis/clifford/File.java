@@ -6,10 +6,6 @@ public class File implements FileSystemComponent {
     private final String name;
     private FileSystemComponent father;
 
-    public File(String name) {
-        this.name = name;
-    }
-
     public File(String name, FileSystemComponent father) {
         this.name = name;
         this.father = father;
@@ -36,8 +32,13 @@ public class File implements FileSystemComponent {
     }
 
     @Override
-    public String addFile(FileSystemComponent file) {
+    public void addFileSystemComponent(FileSystemComponent component) {
         throw new UnsupportedOperationException("Files can´t add files!");
+    }
+
+    @Override
+    public void removeFileSystemComponent(String name) {
+        throw new UnsupportedOperationException("Files can´t remove files!");
     }
 
     @Override
