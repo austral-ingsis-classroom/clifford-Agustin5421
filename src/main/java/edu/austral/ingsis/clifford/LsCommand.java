@@ -17,7 +17,7 @@ public class LsCommand implements Commands {
 
     List<String> childrenNames = new ArrayList<>();
     for (FileSystemComponent child : fileSystemComponent.getChildren()) {
-      childrenNames.add(child.getName());
+      childrenNames.add(child.name());
     }
 
     sortChildrenNames(childrenNames, order);

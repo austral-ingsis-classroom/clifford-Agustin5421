@@ -14,9 +14,9 @@ public class RmCommand implements Commands {
     String name = getName(arguments);
 
     for (FileSystemComponent child : children) {
-      if (child.getName().equals(name)) {
+      if (child.name().equals(name)) {
         if (child instanceof File || recursive) {
-          fileSystem.removeFileSystemComponent(child.getName());
+          fileSystem.remove(child.name());
           return "'" + name + "' " + "removed";
         } else {
           return "cannot remove '" + name + "', is a directory";

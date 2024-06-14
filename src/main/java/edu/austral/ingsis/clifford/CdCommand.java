@@ -8,7 +8,7 @@ public class CdCommand implements Commands {
   public String execute(FileSystem fileSystem, String args) {
     FileSystemComponent file = fileSystem.getCurrentFile();
     if (args.equals(".")) {
-      return "Already at directory: '" + file.getName() + "'";
+      return "Already at directory: '" + file.name() + "'";
     }
 
     if (args.equals("..")) {
@@ -22,35 +22,35 @@ public class CdCommand implements Commands {
     FileSystemComponent targetDirectory = navigateTo(file, args);
     if (targetDirectory != null) {
       fileSystem.setCurrentFile(targetDirectory);
-      return "moved to directory '" + fileSystem.getCurrentFile().getName() + "'";
+      return "moved to directory '" + fileSystem.getCurrentFile().name() + "'";
     } else {
       return "'" + args + "' directory does not exist";
     }
   }
 
   private static String travelToFather(FileSystem fileSystem, FileSystemComponent file) {
-    if (file.getFather() != null) {
-      fileSystem.setCurrentFile(file.getFather());
-      return "moved to directory '" + fileSystem.getCurrentFile().getName() + "'";
+    if (file.father() != null) {
+      fileSystem.setCurrentFile(file.father());
+      return "moved to directory '" + fileSystem.getCurrentFile().name() + "'";
     } else {
-      return "moved to directory '" + fileSystem.getCurrentFile().getName() + "'";
+      return "moved to directory '" + fileSystem.getCurrentFile().name() + "'";
     }
   }
 
   private static String getRoot(FileSystem fileSystem, FileSystemComponent file) {
-    while (file.getFather() != null) {
-      file = file.getFather();
+    while (file.father() != null) {
+      file = file.father();
     }
     fileSystem.setCurrentFile(file);
-    return "moved to directory '" + fileSystem.getCurrentFile().getName() + "'";
+    return "moved to directory '" + fileSystem.getCurrentFile().name() + "'";
   }
 
   private FileSystemComponent navigateTo(FileSystemComponent currentDirectory, String path) {
     FileSystemComponent tempDirectory = currentDirectory;
 
     if (path.startsWith("/")) {
-      while (tempDirectory.getFather() != null) {
-        tempDirectory = tempDirectory.getFather();
+      while (tempDirectory.father() != null) {
+        tempDirectory = tempDirectory.father();
       }
       path = path.substring(1);
     }
@@ -61,7 +61,7 @@ public class CdCommand implements Commands {
       List<FileSystemComponent> children = tempDirectory.getChildren();
       boolean found = false;
       for (FileSystemComponent child : children) {
-        if (child.getName().equals(parts[0])) {
+        if (child.name().equals(parts[0])) {
           tempDirectory = child;
           found = true;
           break;

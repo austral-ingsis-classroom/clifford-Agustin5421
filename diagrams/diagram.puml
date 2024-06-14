@@ -1,48 +1,77 @@
 @startuml
-'https://plantuml.com/class-diagram
-
-interface FileSystem {
+interface FileSystemComponent {
+  +getChildren(): List<FileSystemComponent>
+  +getName(): String
+  +father(): FileSystemComponent
+  +add(file: FileSystemComponent)
+  +remove(file: FileSystemComponent)
 }
 
-interface FileSystemDirectory implements FileSystem {
-    +add(file: FileSystem)
-    +remove(file: FileSystem)
-    +getChildren(): List<FileSystem>
-}
-
-class Directory implements FileSystemDirectory{
+class Directory{
     -name: String
-    -parent: Directory
-    -children: List<FileSystem>
-    +add(file: FileSystem)
-    +remove(file: FileSystem)
+    -parent: FileSystemComponent
+    -children: List<FileSystemComponent>
+    +getChildren(): List<FileSystemComponent>
+    +getName(): String
+    +father(): FileSystemComponent
+    +add(file: FileSystemComponent)
+    +remove(file: FileSystemComponent)
 }
 
-class File implements FileSystem{
+class File{
     -name: String
-    -parent: Directory
+    -parent: FileSystemComponent
+    +getName(): String
+    +father(): FileSystemComponent
 }
 
-interface Action{
-    +execute()
+
+class FileSystem{
+    -currentFile: FileSystemComponent
+    -Map<String, Command> commands
+    +executeCommand(args: String)
+    +getCurrentFile(): FileSystemComponent
+    +setCurrentFile(file: FileSystemComponent)
 }
 
-class cd implements Action{
-    -path: String
-    +execute()
-}
-class ls implements Action{
-    -path: String
-    +execute()
-}
-class touch implements Action{
-    -path: String
-    +execute()
-}
-class mkdir implements Action{
-    -path: String
-    +execute()
+interface Command{
+    +execute(file: FileSystem, args: String)
 }
 
+class CdCommand{
+    +execute(file: FileSystem, args: String)
+}
+class LsCommand{
+    +execute(file: FileSystem, args: String)
+}
+class TouchCommand{
+    +execute(file: FileSystem, args: String)
+}
+class MkdirCommand{
+    +execute(file: FileSystem, args: String)
+}
+
+class PwdCommand{
+    +execute(file: FileSystem, args: String)
+}
+
+class RmCommand{
+    +execute(file: FileSystem, args: String)
+}
+
+FileSystemComponent --o FileSystem : currentFile
+
+FileSystemComponent <|-- Directory
+FileSystemComponent <|-- File
+FileSystemComponent --* Directory : children
+
+FileSystem o-- Command : commands
+
+Command <|-- CdCommand
+Command <|-- LsCommand
+Command <|-- TouchCommand
+Command <|-- MkdirCommand
+Command <|-- PwdCommand
+Command <|-- RmCommand
 
 @enduml

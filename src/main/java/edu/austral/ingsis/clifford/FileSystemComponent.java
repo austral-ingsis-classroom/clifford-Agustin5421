@@ -5,15 +5,11 @@ import java.util.List;
 public interface FileSystemComponent {
   List<FileSystemComponent> getChildren();
 
-  String getName();
+  String name();
 
-  void setFather(FileSystemComponent father);
+  FileSystemComponent father();
 
-  FileSystemComponent getFather();
+  void add(FileSystemComponent component);
 
-  void addFileSystemComponent(FileSystemComponent component);
-
-  void removeFileSystemComponent(String name);
-
-  String typeToString();
+  void remove(String name);
 }
