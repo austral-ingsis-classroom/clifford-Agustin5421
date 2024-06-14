@@ -24,7 +24,9 @@ public class LsCommand implements Commands {
 
     StringBuilder result = new StringBuilder();
     for (String name : childrenNames) {
-      if (!result.toString().contains(name)) result.append(name).append(" ");
+      if (!result.toString().contains(name)) {
+        result.append(name).append(" ");
+      }
     }
 
     return result.toString().trim();

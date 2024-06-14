@@ -39,8 +39,12 @@ public final class File implements FileSystemComponent {
 
   @Override
   public boolean equals(Object obj) {
-    if (obj == this) return true;
-    if (obj == null || obj.getClass() != this.getClass()) return false;
+    if (obj == this) {
+      return true;
+    }
+    if (obj == null || obj.getClass() != this.getClass()) {
+      return false;
+    }
     var that = (File) obj;
     return Objects.equals(this.name, that.name) && Objects.equals(this.father, that.father);
   }
