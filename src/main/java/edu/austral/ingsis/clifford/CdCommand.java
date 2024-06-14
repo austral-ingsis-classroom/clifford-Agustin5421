@@ -6,27 +6,45 @@ import java.util.List;
 public class CdCommand implements Commands{
     @Override
     public String execute(FileSystem fileSystem, String args) {
-        FileSystemComponent fileSystemComponent = fileSystem.getCurrentFile();
+        FileSystemComponent file = fileSystem.getCurrentFile();
         if (args.equals(".")) {
-            return "Already at directory: '" + fileSystemComponent.getName() + "'";
-        } else if (args.equals("..")) {
-            if (fileSystemComponent.getFather() != null) {
-                fileSystem.setCurrentFile(fileSystemComponent.getFather());
-                return "moved to directory '" + fileSystem.getCurrentFile().getName() + "'";
-            } else {
-                return "Already at root directory, can't move up.";
-            }
+            return "Already at directory: '" + file.getName() + "'";
+        }
+
+        if (args.equals("..")) {
+            return travelToFather(fileSystem, file);
+        }
+
+        if (args.equals("/")) {
+            return getRoot(fileSystem, file);
+        }
+
+        FileSystemComponent targetDirectory = navigateTo(file, args);
+        if (targetDirectory != null) {
+            fileSystem.setCurrentFile(targetDirectory);
+            return "moved to directory '" + fileSystem.getCurrentFile().getName() + "'";
         } else {
-            FileSystemComponent targetDirectory = navigateTo(fileSystemComponent, args);
-            if (targetDirectory != null) {
-                fileSystem.setCurrentFile(targetDirectory);
-                return "moved to directory '" + fileSystem.getCurrentFile().getName() + "'";
-            } else {
-                return "'"+args+"' directory does not exist";
-            }
+            return "'"+args+"' directory does not exist";
+        }
+
+    }
+
+    private static String travelToFather(FileSystem fileSystem, FileSystemComponent file) {
+        if (file.getFather() != null) {
+            fileSystem.setCurrentFile(file.getFather());
+            return "moved to directory '" + fileSystem.getCurrentFile().getName() + "'";
+        } else {
+            return "moved to directory '" + fileSystem.getCurrentFile().getName() + "'";
         }
     }
 
+    private static String getRoot(FileSystem fileSystem, FileSystemComponent file) {
+        while (file.getFather() != null) {
+            file = file.getFather();
+        }
+        fileSystem.setCurrentFile(file);
+        return "moved to directory '" + fileSystem.getCurrentFile().getName() + "'";
+    }
 
 
     private FileSystemComponent navigateTo(FileSystemComponent currentDirectory, String path) {

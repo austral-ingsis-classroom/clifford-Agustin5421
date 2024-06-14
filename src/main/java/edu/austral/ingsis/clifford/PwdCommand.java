@@ -6,7 +6,7 @@ public class PwdCommand implements  Commands{
         StringBuilder path = new StringBuilder();
         FileSystemComponent currentFile = fileSystem.getCurrentFile();
         while (currentFile.getFather() != null) {
-            path.insert(0, "/" + fileSystem.getCurrentFile().getName());
+            path.insert(0, "/" + currentFile.getName());
             currentFile = currentFile.getFather();
         }
 
